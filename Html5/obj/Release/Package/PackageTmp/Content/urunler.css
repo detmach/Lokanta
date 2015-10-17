@@ -1,0 +1,118 @@
+﻿/* Basic styles */
+.ui-li-count {
+  border-style: solid;
+  border-width: 1px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6em;
+  margin-top: -0.88em;
+  min-height: 1.6em;
+  min-width: 0.64em;
+  padding: 0 0.48em;
+  position: absolute;
+  right: 2.8em;
+  text-align: center;
+  top: 50%;
+}
+.ui-header .ui-title, .ui-footer .ui-title {
+  display: block;
+  font-size: 1em;
+  margin: 0 30%;
+  min-height: 1.1em;
+  outline: 0 none !important;
+  overflow: hidden;
+  padding: 0;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-grid-a .ui-body {
+    text-align: left;
+    border-color: #ddd;
+}
+.ui-grid-a p {
+    color: #777;
+    line-height: 100%
+}
+/* Stack all blocks to start */
+.ui-grid-a .ui-block-a,
+.ui-grid-a .ui-block-b,
+.ui-grid-a .ui-block-c {
+    width: 100%;
+    float: none;
+}
+.ui-input-text {
+            display: inline-block;
+            width: 50%;
+            text-align:inherit;
+            vertical-align: inherit;
+            float: left;
+        }
+/* Collapsing borders */
+.ui-grid-a > div + div .ui-body {
+    border-top-width: 0;
+}
+/* 1st breakpoint - Float B and C, leave A full width on top */
+@media all and (min-width: 42em) {
+    .ui-grid-a {
+        overflow: hidden; /* Use this or a "clearfix" to give the container height */
+    }
+    .ui-grid-a .ui-body {
+       min-height: 14em;
+    }
+    .ui-grid-a .ui-block-a {
+      float: left;
+      width: 48%;
+    }
+    .ui-grid-a .ui-block-b {
+      float: left;
+      width: 48%;
+    }
+    .ui-grid-a .ui-block-b p,
+    .ui-grid-a .ui-block-a p {
+      font-size: .8em;
+    }
+    .ui-grid-a > div + div .ui-body {
+        border-top-width: 1px;
+    }
+    .ui-grid-a > div:first-child .ui-body {
+        border-bottom-width: 0;
+    }
+    .ui-grid-a > div:last-child .ui-body {
+        border-left-width: 0;
+    }
+}
+/* 2nd breakpoint - Float all, 50/25/25 */
+@media all and (min-width: 55em) {
+    .ui-grid-a .ui-body {
+       min-height: 18em;
+    }
+    .ui-grid-a .ui-block-a {
+      float: left;
+      width: 48%;
+    }
+    .ui-grid-a .ui-block-b {
+      float: left;
+      width: 48%;
+    }
+    .ui-grid-a > div:first-child .ui-body {
+        border-bottom-width: 1px;
+    }
+    .ui-grid-a > div + div .ui-body {
+        border-left-width: 0;
+    }
+}
+/* 3rd breakpoint - Bump up font size at very wide screens */
+@media all and (min-width: 75em) {
+    .ui-grid-a .ui-body {
+      font-size: 100%;
+    }
+    .ui-grid-a .ui-block-a {
+      float: left;
+      width: 48%;
+    }
+    .ui-grid-a .ui-block-b {
+      float: left;
+      width: 48%;
+    }
+}
