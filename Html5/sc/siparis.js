@@ -2,6 +2,7 @@
    
     var id = "yok";
     var ucr;
+    var indirimtutar = "";
     var genel = function () {
         $.ajax({
             type: "POST",
@@ -33,6 +34,9 @@
             error: function () {
             }
         });
+        $("#itutar").on('input', function () {
+            ucrcontrol();
+        })
         var sipars = function () {
             $('#siparis li a').on('click', function () {
                 if ($(this).find('span').attr('id')== "adt") {
@@ -72,12 +76,13 @@
                      ucr = ucr.replace(",", ".");
                      eble = parseFloat(ucr).toFixed(2) * parseFloat(sayi).toFixed(2);
                      aaa = aaa + eble;
-                }
-                
+                 }                
             });
-            $("#ucret").html("Tutar : " + aaa.toFixed(2) + " ₺");
-            $("#ucrets").html("Tutar : " + aaa.toFixed(2) + " ₺");
-        }
+            indirimtutar = $("#itutar").val();
+            var son = aaa.toFixed(2) - parseFloat(indirimtutar);
+            $("#ucret").html("Tutar : " + son.toFixed(2) + " ₺");
+            $("#ucrets").html("Tutar : " + son.toFixed(2) + " ₺");            
+        }        
         var btn = function () {
             $("#up").on('click', function () {
                 $("#adet").val(parseInt($("#adet").val()) + 1);
@@ -132,8 +137,7 @@
                     $('#itutar').focus();
                 }
             });   
-        }
-       
+        }       
         var menuliste = function (id) {
             //alert(id);
             $.ajax({
@@ -184,7 +188,7 @@
     }
     var hspmenu = function () {
         var odemetipi = "";
-        var indirimtutar = "";
+        
         $("input[type='radio']").bind("change", function (event, ui) {
             odemetipi = $(this).attr('id');
         });

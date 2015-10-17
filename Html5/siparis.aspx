@@ -55,7 +55,7 @@
                 <h4>Menü Listesi</h4>
                 <div class="ui-field-contain">
                     <div data-role="controlgroup" data-type="horizontal">
-                        <input type="text" name="adet" id="adet" data-wrapper-class="controlgroup-textinput ui-mini ui-btn" value="1" />
+                        <input type="text" name="adet" id="adet" data-wrapper-class="controlgroup-textinput" value="1" />
                         <a href="#" class="ui-btn ui-mini ui-icon-arrow-u ui-btn-icon-notext" id="up">Button</a>
                         <a href="#" class="ui-btn ui-mini ui-icon-arrow-d ui-btn-icon-notext" id="down">Button</a>
                     </div>
@@ -67,10 +67,18 @@
 
         </div>
         <div class="ui-block-c">
+            <div class="ui-body ui-body-d">
+            <h4 for="itutar">İndirim Uygula</h4>
+            <div class="ui-field-contain">
+<input type="text" name="itutar" id="itutar" class="ui-btn-active" placeholder="İndirim Tutarı Giriniz" value="0" data-mini="true" /><br /><br />
+            </div>
+                
+            
             <h4>Siparişler</h4>
             <ul data-role="listview" data-inset="true" id="siparis">
             </ul>
         </div>
+    </div>
     </div>
     <div data-role="footer" data-position="fixed">
         <div data-role="navbar">
@@ -98,14 +106,14 @@
                             <label for="3">Ticket</label>
                         </fieldset>
 
-                        <label for="flip-3" style="font-size: small">İndirim Uygulansın mı?:</label>
+                        <%--<label for="flip-3" style="font-size: small">İndirim Uygulansın mı?:</label>
                         <select name="flip-3" id="flip-3" data-role="flipswitch" data-mini="true">
                             <option value="0">Hayır</option>
                             <option value="1">Evet</option>
                         </select>
                         <br />
                         <input type="text" name="itutar" id="itutar" placeholder="İndirim Tutarı Giriniz" value="0" data-mini="true" style="display: none" />
-                        <br />
+                        <br />--%>
                         <a href="#" data-rel="back" class="ui-btn ui-btn-inline" style="font-size: 12px;">Vazgeç</a>
                         <a href="#" id="hesapkapat" class="ui-btn ui-btn-inline" style="font-size: 12px;">Hesabı Kapat</a>
                     </div>
