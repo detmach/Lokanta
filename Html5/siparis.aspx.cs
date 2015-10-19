@@ -16,9 +16,7 @@ namespace Html5
     public partial class siparis : System.Web.UI.Page
     {
         static CultureInfo ciTR = new CultureInfo("tr-TR");
-        public static string sayfaid = "";
-        public static string ADISYONID = "";
-        public static string DURUM = "";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -29,9 +27,9 @@ namespace Html5
             }
             else
             {
-                sayfaid = Request.QueryString["ID"].ToString();
-                lbl.Text = "Masa " + sayfaid;
-                Page.Header.Title = "Masa " + sayfaid + " - " + "Toplam Tutar " + hesapYap();
+                veriler.sayfaid = Request.QueryString["ID"].ToString();
+                lbl.Text = "Masa " + veriler.sayfaid;
+                Page.Header.Title = "Masa " + veriler.sayfaid + " - " + "Toplam Tutar " + veriler.hesapYap();
             }
             
         }
@@ -46,8 +44,7 @@ namespace Html5
                 sb.Append("<a href='#' id='"+dr["ID"].ToString()+"' class='ui-btn ui-corner-all ui-mini '>"+dr["KATEGORIADI"].ToString()+"</a>");
             }
             return sb.ToString();
-        }
-        
+        }        
         [WebMethod]
         public static string menuList(string id)
         {
@@ -79,13 +76,13 @@ namespace Html5
             StringBuilder sb = new StringBuilder();
             try
             {                
-                if (sayfaid != "")
+                if (veriler.sayfaid != "")
                 {
-                    DURUM = VeriIslemleri.tekSatirVeriSorgula("select durum from masalar where ID = '" + sayfaid + "'", CommandType.Text).ToString();
-                    if (DURUM == "2")
+                    veriler.DURUM = VeriIslemleri.tekSatirVeriSorgula("select durum from masalar where ID = '" + veriler.sayfaid + "'", CommandType.Text).ToString();
+                    if (veriler.DURUM == "2")
                     {
-                        ADISYONID = VeriIslemleri.tekSatirVeriSorgula("select ID from adisyonlar where MASAID = '" + sayfaid + "' and DURUM = '1'", CommandType.Text).ToString();
-                        SqlDataReader dr = (SqlDataReader)VeriIslemleri.dataReaderSorgu("select URUNADI,FIYAT,satislar.ID,satislar.URUNID,satislar.ADET from satislar inner join urunler on satislar.URUNID=urunler.ID where ADISYONID='" + ADISYONID + "'", CommandType.Text);
+                        veriler.ADISYONID = VeriIslemleri.tekSatirVeriSorgula("select ID from adisyonlar where MASAID = '" + veriler.sayfaid + "' and DURUM = '1'", CommandType.Text).ToString();
+                        SqlDataReader dr = (SqlDataReader)VeriIslemleri.dataReaderSorgu("select URUNADI,FIYAT,satislar.ID,satislar.URUNID,satislar.ADET from satislar inner join urunler on satislar.URUNID=urunler.ID where ADISYONID='" + veriler.ADISYONID + "'", CommandType.Text);
                         sb.Append("<li><a class='ui-btn ui-mini' href='#'>Ürün Adı<span class='ui-li-count'>Adet</span></a></li>");
                         while (dr.Read())
                         {
@@ -94,7 +91,7 @@ namespace Html5
                     }
                     else
                     {
-                        ADISYONID = "";
+                        veriler.ADISYONID = "";
                     }
                 }
             }
@@ -109,13 +106,13 @@ namespace Html5
         {
             try
             {
-                if (ADISYONID == "")
+                if (veriler.ADISYONID == "")
                 {
-                    ADISYONID = adisyonOlustur("1", "1", sayfaid);
+                    veriler.ADISYONID = veriler.adisyonOlustur("1", "1", veriler.sayfaid,"");
                 }
                 else
                 {
-                    VeriIslemleri.sorguCalistir("delete from satislar where ADISYONID = '" + ADISYONID + "'", CommandType.Text);
+                    VeriIslemleri.sorguCalistir("delete from satislar where ADISYONID = '" + veriler.ADISYONID + "'", CommandType.Text);
                 }
                 string URUNID = "", ADET = "";
                 string[] gelenler = veri.Remove(veri.Length - 1).Split('-');
@@ -134,17 +131,17 @@ namespace Html5
                         {
                             if (gelenler[i - 1] == gelenler[i - 3])
                             {
-                                int b = UrunSil(URUNID);
+                                int b = veriler.UrunSil(URUNID);
                                 ADET = (b + Convert.ToInt32(gelenler[i])).ToString();
                             }
                         }
 
-                        UrunleriGir(ADISYONID, URUNID, ADET, sayfaid);
+                        veriler.UrunleriGir(veriler.ADISYONID, URUNID, ADET, veriler.sayfaid);
                         s = 0;
 
                     }
                 }
-                masadurumuguncelle(sayfaid, 2);
+                veriler.masadurumuguncelle(veriler.sayfaid, 2);
             }
             catch (Exception)
             {
@@ -155,7 +152,7 @@ namespace Html5
         [WebMethod]
         public static string UcretHesapla()
         {
-            string donus = hesapYap();
+            string donus = veriler.hesapYap();
             
             return donus;
         }
@@ -165,7 +162,9 @@ namespace Html5
             string donus = "";
             try
             {
-                hesapKapat(odemeturu, indirim);
+                veriler.hesapKapat(odemeturu, indirim, "1");
+                veriler.masadurumuguncelle(veriler.sayfaid, 1);
+                veriler.AdisyonKapat(0);
                 donus = "OK";
             }
             catch (Exception)
@@ -174,88 +173,6 @@ namespace Html5
             }
             return donus;
         }
-        public static void masadurumuguncelle(string masaId, int Durum)
-        {
-            VeriIslemleri.tekSatirVeriSorgula("update masalar set DURUM = '" + Durum + "' where ID ='" + masaId + "'", CommandType.Text);
-        }
-        public static string adisyonOlustur(string SERVISTURNO,string PERSONELID, string MASAID)
-        {
-            string aa  = VeriIslemleri.tekSatirVeriSorgula("insert into adisyonlar (SERVISTURNO,PERSONELID,MASAID,DURUM) VALUES ('" + SERVISTURNO + "','" + PERSONELID + "','" + MASAID + "','1') select SCOPE_IDENTITY() ", CommandType.Text).ToString();
-            return aa;
 
-        }
-        public static void UrunleriGir(string ADISYONNO,string URUNID, string ADET, string MASAID)
-        {
-            VeriIslemleri.sorguCalistir("insert into satislar(ADISYONID,URUNID,ADET,MASAID) values ('" + ADISYONNO + "','" + URUNID + "','" + ADET + "','" + MASAID + "')", CommandType.Text);
-        }
-        public static int UrunSil(string urunid)
-        {
-            int b = (int)VeriIslemleri.tekSatirVeriSorgula("select ADET from satislar where ADISYONID = '" + ADISYONID + "' and URUNID = '" + urunid + "'", CommandType.Text);
-            VeriIslemleri.sorguCalistir("delete from satislar where ADISYONID = '" + ADISYONID + "' and URUNID = '"+urunid+"'",CommandType.Text);
-            return b;
-        }
-        public static string hesapYap()
-        {
-            string donus = "";
-            int adet = 0;
-            double fiyat = 0;
-            double tfiyat = 0;
-            try
-            {
-                DURUM = VeriIslemleri.tekSatirVeriSorgula("select durum from masalar where ID = '" + sayfaid + "'", CommandType.Text).ToString();
-                if (DURUM == "2")
-                {
-                    ADISYONID = VeriIslemleri.tekSatirVeriSorgula("select TOP 1 ID from adisyonlar where MASAID = '" + sayfaid + "' and DURUM = '1'", CommandType.Text).ToString();
-                    SqlDataReader dr = (SqlDataReader)VeriIslemleri.dataReaderSorgu("SELECT satislar.ADET, urunler.FIYAT FROM satislar INNER JOIN urunler ON satislar.URUNID = dbo.urunler.ID WHERE (satislar.MASAID = '" + sayfaid + "') AND (satislar.ADISYONID = '" + ADISYONID + "') ", CommandType.Text);
-                    while (dr.Read())
-                    {
-                        adet = (int)dr["ADET"];
-                        fiyat = Convert.ToDouble(dr["FIYAT"]);
-                        tfiyat += fiyat * adet;
-                    }
-                }
-                else
-                {
-                    ADISYONID = "";
-                }
-            }
-            catch (Exception)
-            {
-                
-            }
-            donus = String.Format(ciTR, "{0:c}", (tfiyat));
-            return donus;
-        }
-        public static void hesapKapat(string odemeturu, string indirim)
-        {
-            try
-            {
-                DURUM = VeriIslemleri.tekSatirVeriSorgula("select durum from masalar where ID = '" + sayfaid + "'", CommandType.Text).ToString();
-                if (DURUM == "2")
-                {
-                    double aratoplam = Convert.ToDouble(hesapYap().Replace("₺", ""));
-                    double kdv = Convert.ToDouble(aratoplam) * 8 / 100;
-                    double geneltoplam = (aratoplam - Convert.ToDouble(indirim));
-                    VeriIslemleri.sorguCalistir("insert into hesapOdemeleri (ADISYONID,ODEMETURID,MUSTERIID,ARATOPLAM,KDVTUTARI,INDIRIM,TOPLAMTUTAR) values ('" + ADISYONID + "','" + odemeturu + "','1','" + aratoplam + "','" + kdv + "','" + indirim + "','" + geneltoplam + "')", System.Data.CommandType.Text);
-                    masadurumuguncelle(sayfaid, 1);
-                    AdisyonKapat(0);
-                }
-            }
-            catch (Exception)
-            {
-            }
-            
-        }
-        public static void AdisyonKapat(int durum)
-        {
-            try
-            {
-                VeriIslemleri.sorguCalistir("update adisyonlar set DURUM ='" + durum + "' where ID='" + ADISYONID + "'", System.Data.CommandType.Text);
-
-            }
-            catch (Exception)
-            {
-            }
-        }
     }
 }

@@ -79,14 +79,14 @@
 
         })
         $("#duzenle").click(function () {
+            $("#kayit").addClass("ui-hidden-accessible");
+            $("#vazgec").removeClass("ui-hidden-accessible");
+            $("#guncelle").removeClass("ui-hidden-accessible");
             $("#adi").val(adi);
             $("#sadi").val(sadi);
             $("#tel").val(tel);
             $("#eposta").val(eposta);
             $("#adres").val(adres);
-            $("#kayit").addClass("ui-hidden-accessible");
-            $("#vazgec").removeClass("ui-hidden-accessible");
-            $("#guncelle").removeClass("ui-hidden-accessible");
             gizlebtn();
         })
         $("#vazgec").click(function () {
@@ -139,6 +139,7 @@
                         $("#kayit").removeClass("ui-hidden-accessible");
                         $("#vazgec").addClass("ui-hidden-accessible");
                         $("#guncelle").addClass("ui-hidden-accessible");
+                        $("#paketSiparis").removeClass("ui-hidden-accessible");
                         $("#adi").val("");
                         $("#sadi").val("");
                         $("#tel").val("");
@@ -216,7 +217,9 @@
             $("#map-page").popup("open");
 
         })
-        
+        $("#paketSiparis").click(function () {
+            $(location).attr('href', 'paketsiparis.aspx?id=' + id);
+        })
     }
     var musteriGetir = function () {
                 $.ajax({
@@ -253,8 +256,8 @@
             id = $(this).attr('id');
 
             if (id != undefined) {
-                $(this).closest("tr").siblings().removeClass("ui-focus");
-                $(this).toggleClass("ui-focus");
+                $(this).closest("tr").siblings().removeClass("ui-focus").css("background-color", "");
+                $(this).toggleClass("ui-focus").css("background-color", "#64b5f6");
                 adi = $(this).find("td:nth-child(1)").text().slice(3);
                 sadi = $(this).find("td:nth-child(2)").text().slice(6);
                 adres = $(this).find("td:nth-child(3)").text().slice(5);
@@ -279,12 +282,14 @@
         $("#duzenle").removeClass("ui-hidden-accessible");
         $("#yerkaydet").removeClass("ui-hidden-accessible");
         $("#yergoster").removeClass("ui-hidden-accessible");
+        $("#paketSiparis").removeClass("ui-hidden-accessible");
     }
     var gizlebtn = function () {
         $("#sil").addClass("ui-hidden-accessible");
         $("#duzenle").addClass("ui-hidden-accessible");
         $("#yerkaydet").addClass("ui-hidden-accessible");
         $("#yergoster").addClass("ui-hidden-accessible");
+        $("#paketSiparis").addClass("ui-hidden-accessible");
     }
     
     

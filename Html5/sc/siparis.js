@@ -188,12 +188,10 @@
     }
     var hspmenu = function () {
         var odemetipi = "";
-        
         $("input[type='radio']").bind("change", function (event, ui) {
             odemetipi = $(this).attr('id');
         });
         $('#hesapkapat').on('click', function () {
-            $("#popupDialog").find('h4').html("asdds");
             if (odemetipi == "") {
                 odemetipi = "1";
             }

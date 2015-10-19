@@ -1,8 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ms.Master" AutoEventWireup="true" CodeBehind="siparis.aspx.cs" Inherits="Html5.siparis" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/ms.Master" AutoEventWireup="true" CodeBehind="paketsiparis.aspx.cs" Inherits="Html5.paketsiparis" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="Content/siparis.css" rel="stylesheet" />
-    <script src="sc/siparis.js"></script>
-
+     <link href="Content/siparis.css" rel="stylesheet" />
+    <script src="sc/paketSiparis.js"></script>
     <style>
         .ui-input-text {
             display: inline-block;
@@ -25,15 +24,14 @@
           padding: 5px;
         }
     </style>
-    <script>
+     <script>
         $(document).live("pageinit", "#main", function () {
-            Siparis.init();            
+            paketSiparis.init();            
         });
         
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <div data-role="main" class="rwd-example" id="main">
 
         <!-- Lead story block -->
@@ -79,7 +77,7 @@
     <div data-role="footer" data-position="fixed">
         <div data-role="navbar">
             <ul>
-                <li><a href="#" id="siparisbtn">Sipariş Al</a></li>
+               <%-- <li><a href="#" id="siparisbtn">Sipariş Al</a></li>--%>
                 <li><a href="#popupDialog" id="hspkpt" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline  ">Hesabı Kapat</a></li>
                 <li><a href="#" id="ucret" class="ui-btn-active">Ücret</a></li>
             </ul>
@@ -111,6 +109,4 @@
 
         </div>
     </div>
-    <!-- /footer -->
-
 </asp:Content>
