@@ -137,7 +137,7 @@ namespace Html5
             {
                 double aratoplam = Convert.ToDouble(hesapYap().Replace("₺", ""));
                 double kdv = Convert.ToDouble(aratoplam) * 8 / 100;
-                double geneltoplam = (aratoplam - Convert.ToDouble(indirim));
+                double geneltoplam = (aratoplam - Convert.ToDouble(indirim.Replace('.',',')));
                 VeriIslemleri.sorguCalistir("insert into hesapOdemeleri (ADISYONID,ODEMETURID,MUSTERIID,ARATOPLAM,KDVTUTARI,INDIRIM,TOPLAMTUTAR) values ('" + veriler.ADISYONID + "','" + odemeturu + "','"+musteriId+"','" + aratoplam + "','" + kdv + "','" + indirim + "','" + geneltoplam + "')", System.Data.CommandType.Text);
                     
             }
@@ -152,7 +152,7 @@ namespace Html5
             {
                 double aratoplam = Convert.ToDouble(musterihesapYap().Replace("₺", ""));
                 double kdv = Convert.ToDouble(aratoplam) * 8 / 100;
-                double geneltoplam = (aratoplam - Convert.ToDouble(indirim));
+                double geneltoplam = (aratoplam - Convert.ToDouble(indirim.Replace('.', ',')));
                 VeriIslemleri.sorguCalistir("insert into hesapOdemeleri (ADISYONID,ODEMETURID,MUSTERIID,ARATOPLAM,KDVTUTARI,INDIRIM,TOPLAMTUTAR) values ('" + veriler.ADISYONID + "','" + odemeturu + "','" + musteriId + "','" + aratoplam + "','" + kdv + "','" + indirim + "','" + geneltoplam + "')", System.Data.CommandType.Text);
 
             }

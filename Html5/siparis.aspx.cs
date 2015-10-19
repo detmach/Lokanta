@@ -1,4 +1,5 @@
 ﻿using Detmach;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -73,6 +74,7 @@ namespace Html5
         [WebMethod]
         public static string Siparisler()
         {
+            string veri = "";
             StringBuilder sb = new StringBuilder();
             try
             {                
@@ -82,12 +84,15 @@ namespace Html5
                     if (veriler.DURUM == "2")
                     {
                         veriler.ADISYONID = VeriIslemleri.tekSatirVeriSorgula("select ID from adisyonlar where MASAID = '" + veriler.sayfaid + "' and DURUM = '1'", CommandType.Text).ToString();
-                        SqlDataReader dr = (SqlDataReader)VeriIslemleri.dataReaderSorgu("select URUNADI,FIYAT,satislar.ID,satislar.URUNID,satislar.ADET from satislar inner join urunler on satislar.URUNID=urunler.ID where ADISYONID='" + veriler.ADISYONID + "'", CommandType.Text);
-                        sb.Append("<li><a class='ui-btn ui-mini' href='#'>Ürün Adı<span class='ui-li-count'>Adet</span></a></li>");
-                        while (dr.Read())
-                        {
-                            sb.Append("<li><a class='ui-btn ui-mini' href='#' ucr='"+Convert.ToDouble(dr["FIYAT"])+"' id='" + dr["URUNID"].ToString() + "'>" + dr["URUNADI"].ToString() + "<span id='adt' class='ui-li-count'>" + dr["ADET"].ToString() + "</span></a></li>");
-                        }
+                        DataTable dt = VeriIslemleri.dataTableSorgu("SELECT urunler.URUNADI, urunler.FIYAT, satislar.ID, satislar.URUNID, satislar.ADET, adisyonlar.ACIKLAMA FROM satislar INNER JOIN urunler ON satislar.URUNID = urunler.ID INNER JOIN adisyonlar ON satislar.ADISYONID = adisyonlar.ID WHERE (satislar.ADISYONID = '"+veriler.ADISYONID+"')", CommandType.Text);
+                        veri = JsonConvert.SerializeObject(dt);
+
+                        //SqlDataReader dr = (SqlDataReader)VeriIslemleri.dataReaderSorgu("select URUNADI,FIYAT,satislar.ID,satislar.URUNID,satislar.ADET from satislar inner join urunler on satislar.URUNID=urunler.ID where ADISYONID='" + veriler.ADISYONID + "'", CommandType.Text);
+                        //sb.Append("<li><a class='ui-btn ui-mini' href='#'>Ürün Adı<span class='ui-li-count'>Adet</span></a></li>");
+                        //while (dr.Read())
+                        //{
+                        //    sb.Append("<li><a class='ui-btn ui-mini' href='#' ucr='"+Convert.ToDouble(dr["FIYAT"])+"' id='" + dr["URUNID"].ToString() + "'>" + dr["URUNADI"].ToString() + "<span id='adt' class='ui-li-count'>" + dr["ADET"].ToString() + "</span></a></li>");
+                        //}
                     }
                     else
                     {
@@ -97,18 +102,18 @@ namespace Html5
             }
             catch (Exception)
             {
-                sb.Append("Hata Oluştu");
+                veri = "Hata Oluştu";
             }
-            return sb.ToString();
+            return veri;
         }
         [WebMethod]
-        public static string SiparisAl(string veri)
+        public static string SiparisAl(string veri,string aciklama)
         {
             try
             {
                 if (veriler.ADISYONID == "")
                 {
-                    veriler.ADISYONID = veriler.adisyonOlustur("1", "1", veriler.sayfaid,"");
+                    veriler.ADISYONID = veriler.adisyonOlustur("1", "1", veriler.sayfaid,aciklama);
                 }
                 else
                 {

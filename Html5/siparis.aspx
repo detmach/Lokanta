@@ -35,7 +35,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div data-role="main" class="rwd-example" id="main">
-
+        <input class="ui-input-text ui-mini" style="text-align:start;width:800px" id="aciklama" placeholder="Açıklama Yazınız" />
         <!-- Lead story block -->
         <div class="ui-block-a">
             <div class="ui-body ui-body-d" data-inline="true" id="menu">

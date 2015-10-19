@@ -2,6 +2,7 @@
    
     var id = "yok";
     var ucr;
+    var indirimtutar = "";
     var genel = function () {
         $.ajax({
             type: "POST",
@@ -33,10 +34,14 @@
             error: function () {
             }
         });
+        $("#itutar").on('input', function () {
+            ucrcontrol();
+        })
         var sipars = function () {
             $('#siparis li a').on('click', function () {
                 if ($(this).find('span').attr('id')== "adt") {
                     $(this).parents('li').remove();
+                    ucrcontrol();
                 }                
             })
         }
@@ -62,20 +67,22 @@
         var ucrcontrol = function () {
             var sayi;
             var ucr;
-            var aaa = 0;
-            var eble = 0;
+            var aaa = 0.00;
+            var eble = 0.00;
             $.each($('#siparis a'), function () {
-                sayi = parseInt($(this).attr('ucr'));
-                ucr = parseFloat($(this).text().replace(/[A-Z a-zĞÜŞİÖÇğüşıçö-]+/g, "").replace("₺", "").replace(",", "."))
-                if ($(this).attr('ucr') != 0 && $(this).attr('ucr') != undefined) {
-                    console.log(ucr * sayi);
-                    eble = ucr * sayi;
-                    aaa += eble;
-                }
-                
+                ucr = $(this).attr('ucr');
+                 sayi = $(this).text().replace(/[A-Z a-zĞÜŞİÖÇğüşıçö-]+/g, "");
+                 if (typeof $(this).attr('ucr') != "" && typeof $(this).attr('ucr') != "undefined" && typeof $(this).text() != "undefined" && typeof $(this).text() != "") {
+                     ucr = ucr.replace(",", ".");
+                     eble = parseFloat(ucr).toFixed(2) * parseFloat(sayi).toFixed(2);
+                     aaa = aaa + eble;
+                 }                
             });
-            console.log(aaa);
-        }
+            indirimtutar = $("#itutar").val();
+            var son = aaa.toFixed(2) - parseFloat(indirimtutar);
+            $("#ucret").html("Tutar : " + son.toFixed(2) + " ₺");
+            $("#ucrets").html("Tutar : " + son.toFixed(2) + " ₺");            
+        }        
         var btn = function () {
             $("#up").on('click', function () {
                 $("#adet").val(parseInt($("#adet").val()) + 1);
@@ -130,8 +137,7 @@
                     $('#itutar').focus();
                 }
             });   
-        }
-       
+        }       
         var menuliste = function (id) {
             //alert(id);
             $.ajax({
@@ -182,12 +188,10 @@
     }
     var hspmenu = function () {
         var odemetipi = "";
-        var indirimtutar = "";
         $("input[type='radio']").bind("change", function (event, ui) {
             odemetipi = $(this).attr('id');
         });
         $('#hesapkapat').on('click', function () {
-            $("#popupDialog").find('h4').html("asdds");
             if (odemetipi == "") {
                 odemetipi = "1";
             }

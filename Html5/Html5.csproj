@@ -44,7 +44,7 @@
   <ItemGroup>
     <Reference Include="Detmach, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>D:\Desktop\Blog Tasarımı\YagmurBilisim - Tahmin\YagmurBilisim\bin\Debug\Detmach.dll</HintPath>
+      <HintPath>..\..\YagmurBilisim - Tahmin\YagmurBilisim\bin\Debug\Detmach.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -1477,6 +1477,7 @@
     <Content Include="app.config" />
     <Content Include="musteri.aspx" />
     <None Include="Properties\PublishProfiles\Deto.pubxml" />
+    <None Include="Properties\PublishProfiles\iş.pubxml" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="paketsiparis.aspx" />
     <Content Include="Scripts\jquery-1.8.3.js" />

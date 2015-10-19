@@ -19,7 +19,6 @@
     </script>
     <script src="sc/musteriler.js"></script>
     <script src="sc/jquery.filter_input.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
     
 
     <script>
@@ -32,17 +31,8 @@
             var koordinat;
             
         });
-        
-
-
-
-        function initMap() {
-            
+        function initMap() {           
         }
-
-
-
-
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -54,7 +44,6 @@
                 </div>
                 <div role="main" id="map-canvas" class="ui-content">
                     <a href="#" class="ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-rel="back">Hayır</a>
-                    <%--<a href="#" id="silkisi" class="ui-btn ui-mini ui-corner-all ui-shadow ui-btn-inline ui-btn-a" data-transition="flow">Evet</a>--%>
                 </div>
             </div>
         <div data-role="popup" id="KisiSil" data-dismissible="true">
@@ -88,6 +77,7 @@
             <a href="#" id="duzenle" class="ui-btn ui-mini ui-hidden-accessible">Düzenle</a>
             <a href="#" id="yerkaydet" class="ui-btn ui-mini ui-hidden-accessible">Haritadaki Yerini Kaydet</a>
             <a href="#" id="yergoster" class="ui-btn ui-mini ui-hidden-accessible">Haritadaki Yerini Göster</a>
+            <a href="#" id="paketSiparis" class="ui-btn ui-mini ui-hidden-accessible">Paket Sipariş</a>
 
 
 

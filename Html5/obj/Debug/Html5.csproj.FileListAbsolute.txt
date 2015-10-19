@@ -37,3 +37,13 @@ e:\Repo\Pr\Html5\bin\Detmach.pdb
 e:\Repo\Pr\Html5\bin\Newtonsoft.Json.xml
 e:\Repo\Pr\Html5\obj\Debug\Html5.dll
 e:\Repo\Pr\Html5\obj\Debug\Html5.pdb
+F:\Pr\Html5\bin\Html5.dll.config
+F:\Pr\Html5\bin\Html5.dll
+F:\Pr\Html5\bin\Html5.pdb
+F:\Pr\Html5\bin\Detmach.dll
+F:\Pr\Html5\bin\Newtonsoft.Json.dll
+F:\Pr\Html5\bin\Detmach.pdb
+F:\Pr\Html5\bin\Newtonsoft.Json.xml
+F:\Pr\Html5\obj\Debug\Html5.csprojResolveAssemblyReference.cache
+F:\Pr\Html5\obj\Debug\Html5.dll
+F:\Pr\Html5\obj\Debug\Html5.pdb

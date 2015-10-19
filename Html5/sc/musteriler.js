@@ -139,7 +139,7 @@
                         $("#kayit").removeClass("ui-hidden-accessible");
                         $("#vazgec").addClass("ui-hidden-accessible");
                         $("#guncelle").addClass("ui-hidden-accessible");
-                        $("#paketSiparis").removeClass("ui-hidden-accessible");
+                        $("#paketSiparis").addClass("ui-hidden-accessible");
                         $("#adi").val("");
                         $("#sadi").val("");
                         $("#tel").val("");

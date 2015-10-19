@@ -107,6 +107,9 @@
     }
     var hesapkapa = function () {
         $('#hesapkapat').on('click', function () {
+            aciklama = $('#aciklama').val();
+            alert(aciklama);
+            debugger;
             var c = "";
             $.each($('#siparis a'), function () {
                 var a = $(this);

@@ -16,7 +16,6 @@
     <script>
         $(document).ready(function (event) {
             Default.init();
-
         });
 
     </script>

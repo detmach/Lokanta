@@ -3,6 +3,7 @@
     var id = "yok";
     var ucr;
     var indirimtutar = "";
+    var aciklama = "";
     var genel = function () {
         $.ajax({
             type: "POST",
@@ -91,6 +92,7 @@
                 $("#adet").val(parseInt($("#adet").val()) - 1);
             })            
             $('#siparisbtn').on('click', function () {
+                aciklama = $('#aciklama').val();
                 var c = "";                
                 $.each($('#siparis a'), function () {
                     var a = $(this);
@@ -109,7 +111,8 @@
                         url: "siparis.aspx/SiparisAl",
                         dataType: "json",
                         data: JSON.stringify({
-                            "veri": c
+                            "veri": c,
+                            "aciklama": aciklama
                         }),
                         async: true,
                         contentType: "application/json; charset=UTF-8",
@@ -160,6 +163,8 @@
             });
         }
         var siparislerigetir = function () {
+            var veris = "<li><a class='ui-btn ui-mini' href='#'>Ürün Adı<span class='ui-li-count'>Adet</span></a></li>";
+            $("#siparis").html(veris);
             $.ajax({
                 type: "POST",
                 url: "siparis.aspx/Siparisler",
@@ -170,16 +175,28 @@
                 async: true,
                 contentType: "application/json; charset=UTF-8",
                 success: function (msg) {
-                    $("#siparis").html(msg.d);
-                    $("#siparis").listview('refresh');                    
-                    sipars();
-                    btn();
+                    var ack = "";
+                    var veri = JSON.parse(msg.d);
+                    //console.log(veri);
+                    if (msg.d != "") {
+                        $.each(veri, function (index, val) {
+                            veris += "<li><a class='ui-btn ui-mini' href='#' ucr='" + val.FIYAT + "' id='" + val.URUNID + "'>" + val.URUNADI + "<span id='adt' class='ui-li-count'>" + val.ADET + "</span></a></li>";
+                            //"<td>"+val.EMAIL+"</td></tr>";
+                            ack = val.ACIKLAMA;
+                        });
+                        $("#siparis").html(veris);
+                        $("#siparis").listview('refresh');
+                        $("#aciklama").val(ack);
+                        
+                    }
+                    
+                    
                 },
                 error: function () {
-                    sipars();
-                    btn();
                 }
             });
+            sipars();
+            btn();
         }
         siparislerigetir();
         menuliste(id);
@@ -192,6 +209,7 @@
             odemetipi = $(this).attr('id');
         });
         $('#hesapkapat').on('click', function () {
+            
             if (odemetipi == "") {
                 odemetipi = "1";
             }
